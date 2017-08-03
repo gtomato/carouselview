@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		android:layout_above="@+id/btnPreview"
+		android:layout_alignParentTop="true">
+
+		<android.support.design.widget.TabLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:id="@+id/tabPanel">
+
+			<android.support.design.widget.TabItem
+				android:text="Carousel"/>
+
+			<android.support.design.widget.TabItem
+				android:text="Transformer"/>
+
+			<android.support.design.widget.TabItem
+				android:text="Adapter"/>
+
+		</android.support.design.widget.TabLayout>
+
+		<FrameLayout
+			android:id="@+id/tabContent"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+
+			<ScrollView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/display"
+				android:paddingTop="8dp" >
+
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Is Infinite Loop"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="No"
+							style="@style/ResultText"/>
+
+						<Switch
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/swhIsInfinite"/>
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Is Scrolling Align To Views"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="No"
+							style="@style/ResultText"/>
+
+						<Switch
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/swhIsScrollingAlignToViews"
+							android:checked="true"
+							/>
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Drawing Order"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<Spinner
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/spnDrawOrder" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="1"
+							style="@style/ResultText"/>
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Number of Extra Visible Items"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="1"
+							style="@style/ResultText"/>
+
+						<SeekBar
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:id="@+id/sekExtraChilds"
+							android:max="15"
+							android:progress="1"/>
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Gravity"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<Spinner
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/spnGravity" />
+
+						<!--<TextView-->
+							<!--android:layout_width="wrap_content"-->
+							<!--android:layout_height="wrap_content"-->
+							<!--android:text="1"-->
+							<!--style="@style/ResultText"/>-->
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Is Clip Children"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="No"
+							style="@style/ResultText"/>
+
+						<Switch
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/swhIsClipChildren"
+							android:checked="false"
+							/>
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Layout Width"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<Spinner
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/spnLayoutWidth" />
+
+						<!--<TextView-->
+							<!--android:layout_width="wrap_content"-->
+							<!--android:layout_height="wrap_content"-->
+							<!--android:text="1"-->
+							<!--style="@style/ResultText"/>-->
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Layout Height"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<Spinner
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/spnLayoutHeight" />
+
+						<!--<TextView-->
+							<!--android:layout_width="wrap_content"-->
+							<!--android:layout_height="wrap_content"-->
+							<!--android:text="1"-->
+							<!--style="@style/ResultText"/>-->
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+				</LinearLayout>
+
+			</ScrollView>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Transformer"
+					style="@style/SubtitleText"/>
+
+				<com.gt.android.ui.layout.ConfigRowLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+
+					<!--<TextView-->
+						<!--android:layout_width="wrap_content"-->
+						<!--android:layout_height="wrap_content"-->
+						<!--android:text="1"-->
+						<!--style="@style/ResultText"/>-->
+
+					<Spinner
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/spnTransformer" />
+
+				</com.gt.android.ui.layout.ConfigRowLayout>
+
+				<android.support.v7.widget.RecyclerView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:id="@+id/rcvTransformerParameters" />
+
+			</LinearLayout>
+
+			<ScrollView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/dataSource"
+				android:paddingTop="8dp" >
+
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Number of Items"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="1234"
+							style="@style/ResultText"/>
+
+						<SeekBar
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:id="@+id/sekItems"
+							android:max="24"
+							android:progress="11"/>
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Width"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="1"
+							style="@style/ResultText"/>
+
+						<SeekBar
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:id="@+id/sekItemWidth"
+							android:max="33"
+							android:progress="8"/> <!-- 40dp - 360dp (10dp/progress) + fill_parent, default 120dp -->
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Height"
+						style="@style/SubtitleText"/>
+
+					<com.gt.android.ui.layout.ConfigRowLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="1"
+							style="@style/ResultText"/>
+
+						<SeekBar
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:id="@+id/sekItemHeight"
+							android:max="33"
+							android:progress="12"/> <!-- 40dp - 360dp (10dp/progress) + fill_parent, default 160dp -->
+
+					</com.gt.android.ui.layout.ConfigRowLayout>
+				</LinearLayout>
+
+			</ScrollView>
+		</FrameLayout>
+
+	</LinearLayout>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Preview"
+		android:id="@+id/btnPreview"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:fontFamily="sans-serif-light"
+		/>
+
+</RelativeLayout>

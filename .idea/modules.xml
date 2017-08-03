@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/GT_CarouselView_Android_Demo.iml" filepath="$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/GT_CarouselView_Android_Demo.iml" />
+      <module fileurl="file://$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/carouselview/carouselview.iml" filepath="$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/carouselview/carouselview.iml" />
+      <module fileurl="file://$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/demo/demo.iml" filepath="$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/demo/demo.iml" />
+    </modules>
+  </component>
+</project>

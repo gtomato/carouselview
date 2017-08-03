@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply from: '../deploy.gradle'
+
+group = 'com.gt.android.library'
+archivesBaseName = 'carouselview'
+version = '2.0.0'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 21
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.+'
+    compile 'com.android.support:support-annotations:23.1.1'
+}
+
+uploadArchives {
+    repositories.mavenDeployer.pom.project {
+        name 'CarouselView'
+        description 'A wonderful library to display 2D fancy carousels for Android.'
+        artifactId project.archivesBaseName
+        packaging 'aar'
+        url 'https://github.com/gtomato/carouselview'
+
+        licenses {
+            license {
+                name 'MIT License'
+                url 'http://www.opensource.org/licenses/mit-license.php'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'sunny-chung'
+                name 'Sunny Chung'
+                email 'sunnychung@live.hk'
+            }
+        }
+    }
+}

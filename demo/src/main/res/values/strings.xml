@@ -1,0 +1,15 @@
+<resources>
+	<string name="app_name">Carousel View Demo</string>
+
+	<string-array name="carousel_layout_width">
+		<item>MATCH_PARENT</item>
+		<item>WRAP_CONTENT</item>
+		<item>160dp</item>
+	</string-array>
+
+	<string-array name="carousel_layout_height">
+		<item>MATCH_PARENT</item>
+		<item>WRAP_CONTENT</item>
+		<item>200dp</item>
+	</string-array>
+</resources>

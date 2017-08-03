@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity$PlaceholderFragment"
+				android:clipChildren="false"
+				android:clipToPadding="false"
+				android:padding="10dp"
+				android:background="#333333"
+	>
+
+		<!--<android.support.v7.widget.RecyclerView-->
+			<!--android:id="@+id/carousel"-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:layout_centerInParent="true"/>-->
+
+	<com.gt.android.ui.widget.CarouselView
+		android:id="@+id/carousel"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_centerInParent="true"
+		android:background="#40ffffff"
+		/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/lblSelectedIndex"
+		tools:text="Selected Index"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:textColor="@android:color/white"/>
+
+</RelativeLayout>

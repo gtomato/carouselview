@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="library" pattern="file[CarouselView]:*/&amp;&amp;!file[CarouselView]:build//*&amp;&amp;!file[CarouselView]:src/androidTest//*" />
+</component>
