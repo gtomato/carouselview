@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply from: '../deploy.gradle'
 
-group = 'com.gt.android.library'
+group = 'com.gtomato.android.library'
 archivesBaseName = 'carouselview'
 version = '2.0.0'
 
