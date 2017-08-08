@@ -1,6 +1,6 @@
 # CarouselView
 
-**Current Version: 2.0.0**
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.gtomato.android.library/carouselview/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.gtomato.android.library/carouselview) [![JCenter](https://api.bintray.com/packages/gtomato/android-libraries/carouselview/images/download.svg)](https://bintray.com/gtomato/android-libraries/carouselview/_latestVersion)
 
 A wonderful library to display 2D fancy carousels for Android.
 
@@ -13,7 +13,7 @@ Please read [the website](https://gtomato.github.io/carouselview/) for more info
 
 Install via Gradle:
 ```groovy
-compile 'com.gt.android.library:carouselview:<version>'
+compile 'com.gtomato.android.library:carouselview:<version>'
 ```
 
 
@@ -22,7 +22,7 @@ compile 'com.gt.android.library:carouselview:<version>'
 Layout XML:
 
 ```xml
-	<com.gt.android.ui.widget.CarouselView
+	<com.gtomato.android.ui.widget.CarouselView
 		android:id="@+id/carousel"
 		android:layout_width="match_parent"
 		android:layout_height="150dp"
