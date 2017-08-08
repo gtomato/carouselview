@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply from: '../deploy.gradle'
 
-group = 'com.gt.android.library'
+group = 'com.gtomato.android.library'
 archivesBaseName = 'carouselview'
 version = '2.0.0'
 
@@ -25,7 +25,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.+'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.android.support:support-annotations:23.1.1'
 }
 
@@ -35,7 +35,13 @@ uploadArchives {
         description 'A wonderful library to display 2D fancy carousels for Android.'
         artifactId project.archivesBaseName
         packaging 'aar'
-        url 'https://github.com/gtomato/carouselview'
+        url 'https://gtomato.github.io/carouselview/'
+
+        scm {
+            connection 'scm:git:git@github.com:gtomato/carouselview.git'
+            developerConnection 'scm:git:git@github.com:gtomato/carouselview.git'
+            url 'https://github.com/gtomato/carouselview'
+        }
 
         licenses {
             license {
@@ -50,6 +56,8 @@ uploadArchives {
                 id 'sunny-chung'
                 name 'Sunny Chung'
                 email 'sunnychung@live.hk'
+                organization 'Green Tomato Limited'
+                organizationUrl 'http://www.greentomato.net'
             }
         }
     }
