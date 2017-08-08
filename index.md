@@ -1,6 +1,6 @@
 # Introduction
 
-**Current Version: 2.0.0**
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.gtomato.android.library/carouselview/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.gtomato.android.library/carouselview) [![JCenter](https://api.bintray.com/packages/gtomato/android-libraries/carouselview/images/download.svg)](https://bintray.com/gtomato/android-libraries/carouselview/_latestVersion)
 
 CarouselView let you create fancy carousels effortlessly.
 
