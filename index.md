@@ -212,7 +212,7 @@ carousel.setEnableFling(false);
 
 Include in module dependencies:
 ```groovy
-compile 'com.gt.android.library:carouselview:<version>'
+compile 'com.gtomato.android.library:carouselview:<version>'
 ```
 
 ## Minimal Usage
@@ -225,7 +225,7 @@ Create CarouselView via layout XML or via code as usual.
                 android:layout_height="match_parent"
                 android:padding="10dp">
 
-    <com.gt.android.ui.widget.CarouselView
+    <com.gtomato.android.ui.widget.CarouselView
         android:id="@+id/carousel"
         android:layout_width="match_parent"
         android:layout_height="150dp"
