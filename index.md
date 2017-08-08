@@ -271,9 +271,9 @@ carousel.setAdapter(new MyDataAdapter());
 
 Check out our demo project to see built-in transformations in action, how do configurations affect the visual effect, and how to implement.
 
-## Javadocs
+## Javadoc
 
-Check out the [javadocs](javadocs/) for all available APIs.
+Check out the [javadoc](javadoc/) for all available APIs.
 
 
 # Known Limitation
@@ -321,7 +321,7 @@ Check out the [javadocs](javadocs/) for all available APIs.
 - Fix itemviews are not relayout if CarouselView#scrollToPosition(int) is called during layout process
 - Remove a builtin transformation: TimeMachine
 - Remove CarouselLayoutManager#setInverseScrollDirection(boolean)
-- Add javadocs
+- Add javadoc
 
 ### 1.0.4 (15 Oct, 2015)
 
