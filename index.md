@@ -132,7 +132,7 @@ The display effect is as below:
 Align the current view at center, bottom-left corner, or other corners as you wish.
 
 ```java
-carousel.setGravity(Gravity.LEFT | Gravity.BOTTOM);
+carousel.setGravity(Gravity.RIGHT | Gravity.BOTTOM);
 ```
 
 ![Alignment Demo](media/alignment.gif)
