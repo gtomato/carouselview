@@ -24,7 +24,7 @@ import com.gtomato.android.ui.transformer.WheelViewTransformer;
  */
 public class CarouselView extends RecyclerView {
 	private static final String TAG = CarouselView.class.getSimpleName();
-	private static boolean sIsDebug = true;
+	private static boolean sIsDebug = false;
 
 	private CarouselLayoutManager mLayoutManager;
 	private ViewTransformer mTransformer = CarouselLayoutManager.DEFAULT_TRANSFORMER;

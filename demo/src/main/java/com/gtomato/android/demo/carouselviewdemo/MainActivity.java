@@ -17,7 +17,7 @@ public class MainActivity extends FragmentActivity {
 					.add(R.id.container, new ConfigFragment())
 					.commit();
 		}
-		CarouselView.setDebug(true);
+		CarouselView.setDebug(false);
 	}
 
 
