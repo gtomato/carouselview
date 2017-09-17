@@ -4,11 +4,11 @@ apply from: '../deploy.gradle'
 
 group = 'com.gtomato.android.library'
 archivesBaseName = 'carouselview'
-version = '2.0.0'
+version = '2.0.1'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
         minSdkVersion 11
