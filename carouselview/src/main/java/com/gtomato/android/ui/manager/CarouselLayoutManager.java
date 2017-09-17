@@ -700,17 +700,22 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 //			mViewAtPosition.put(position, new WeakReference<>(view));
 			logv(String.format("addView (%d [%d]) %s", position, translatedPosition, view));
 
-			// we have to measure/layout each child view or they won't display
-			measureChildWithMargins(view, 0, 0);
 		} else {
 			// re-attach the cached view
 			attachView(view);
 //			viewCache.remove(translatedPosition);
 		}
-		if (state.isPreLayout()) return;
+
+		measureChildWithMargins(view, 0, 0);
+
+		if (state.isPreLayout()) {
+			return;
+		}
+
 		layoutDecorated(view, mLeftOffset, mTopOffset,
 				mLeftOffset + mDecoratedChildWidth,
 				mTopOffset + mDecoratedChildHeight);
+
 		mTransformer.transform(view, -(pixelToPosition(mScrollOffset) - position));
 	}
 
