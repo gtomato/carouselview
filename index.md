@@ -309,7 +309,12 @@ Check out the [javadoc](javadoc/) for all available APIs.
 
 # Release Notes
 
-### 2.0 (3 Aug, 2017)
+### 2.0.1 (17 Sep, 2017)
+
+- Fix itemviews are not re-measured after first inflation on layout pass
+- Fix debug logging flag should be off by default
+
+### 2.0.0 (3 Aug, 2017)
 
 - Add new built-in transformation: Flat Merry-go-round
 - Add Gravity
