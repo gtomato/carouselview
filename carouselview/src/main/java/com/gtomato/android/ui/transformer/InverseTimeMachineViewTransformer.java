@@ -12,7 +12,7 @@ import com.gtomato.android.ui.widget.CarouselView;
  */
 
 public class InverseTimeMachineViewTransformer implements CarouselView.ViewTransformer {
-    protected static final float translationXRate = (1) * 0.5f;
+    private static final float translationXRate = (1) * 0.5f;
 
     @Override
     public void onAttach(CarouselLayoutManager layoutManager) {
@@ -21,7 +21,7 @@ public class InverseTimeMachineViewTransformer implements CarouselView.ViewTrans
 
     @Override
     public void transform(View view, float position) {
-        int width = view.getMeasuredWidth(), height = view.getMeasuredHeight();
+        int width = view.getMeasuredWidth();
         view.setTranslationX(width * position * translationXRate * (2f / (Math.abs(position) + 2)));
         view.setScaleX(2f / (position + 2));
         view.setScaleY(2f / (position + 2));

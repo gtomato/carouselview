@@ -19,46 +19,29 @@ import com.gtomato.android.ui.widget.CarouselView;
  */
 
 public abstract class ParameterizableViewTransformer implements CarouselView.ViewTransformer {
-    protected static final float EPS = 1e-3f;
+    private static final float EPS = 1e-3f;
 
-    protected float mOffsetXPercent = 0f, mOffsetYPercent = 0f;
-    protected float mMinScaleX = Float.NaN, mMaxScaleX = Float.NaN, mScaleXOffset = Float.NaN, mScaleXFactor = Float.NaN;
-    protected float mMinScaleY = Float.NaN, mMaxScaleY = Float.NaN, mScaleYOffset = Float.NaN, mScaleYFactor = Float.NaN;
-    protected float mRotateDegree = Float.NaN;
-    protected boolean mScaleLargestAtCenter = false;
+    float mOffsetXPercent = 0f;
+    private float mOffsetYPercent = 0f;
+    float mScaleYFactor = Float.NaN;
+    private float mRotateDegree = Float.NaN;
 
-    protected float mRotateDistFactor = Float.NaN; // depends on mRotateDegree
+    private float mRotateDistFactor = Float.NaN; // depends on mRotateDegree
 
-    protected ParameterizableViewTransformer() {
-
-    }
+    ParameterizableViewTransformer() { }
 
     @Override
-    public void onAttach(CarouselLayoutManager layoutManager) {
+    public void onAttach(CarouselLayoutManager layoutManager) { }
 
-    }
-
-    protected float getOffsetXPercent() {
-        return mOffsetXPercent;
-    }
-
-    protected void setOffsetXPercent(float offsetXPercent) {
+    void setOffsetXPercent(float offsetXPercent) {
         mOffsetXPercent = offsetXPercent;
     }
 
-    protected float getOffsetYPercent() {
-        return mOffsetYPercent;
-    }
-
-    protected void setOffsetYPercent(float offsetYPercent) {
+    void setOffsetYPercent(float offsetYPercent) {
         mOffsetYPercent = offsetYPercent;
     }
 
-    protected float getRotateDegree() {
-        return mRotateDegree;
-    }
-
-    protected void setRotateDegree(float rotateDegree) {
+    void setRotateDegree(float rotateDegree) {
         mRotateDegree = rotateDegree;
         if (Float.isNaN(rotateDegree)) {
             mRotateDistFactor = Float.NaN;
@@ -69,76 +52,8 @@ public abstract class ParameterizableViewTransformer implements CarouselView.Vie
         }
     }
 
-    protected float getMinScaleX() {
-        return mMinScaleX;
-    }
-
-    protected void setMinScaleX(float minScaleX) {
-        mMinScaleX = minScaleX;
-    }
-
-    protected float getMaxScaleX() {
-        return mMaxScaleX;
-    }
-
-    protected void setMaxScaleX(float maxScaleX) {
-        mMaxScaleX = maxScaleX;
-    }
-
-    protected float getScaleXFactor() {
-        return mScaleXFactor;
-    }
-
-    protected void setScaleXFactor(float scaleXFactor) {
-        mScaleXFactor = scaleXFactor;
-    }
-
-    protected float getMinScaleY() {
-        return mMinScaleY;
-    }
-
-    protected void setMinScaleY(float minScaleY) {
-        mMinScaleY = minScaleY;
-    }
-
-    protected float getMaxScaleY() {
-        return mMaxScaleY;
-    }
-
-    protected void setMaxScaleY(float maxScaleY) {
-        mMaxScaleY = maxScaleY;
-    }
-
-    protected float getScaleYFactor() {
-        return mScaleYFactor;
-    }
-
-    protected void setScaleYFactor(float scaleYFactor) {
+    void setScaleYFactor(float scaleYFactor) {
         mScaleYFactor = scaleYFactor;
-    }
-
-    protected float getScaleXOffset() {
-        return mScaleXOffset;
-    }
-
-    protected void setScaleXOffset(float scaleXOffset) {
-        mScaleXOffset = scaleXOffset;
-    }
-
-    protected float getScaleYOffset() {
-        return mScaleYOffset;
-    }
-
-    protected void setScaleYOffset(float scaleYOffset) {
-        mScaleYOffset = scaleYOffset;
-    }
-
-    protected boolean isScaleLargestAtCenter() {
-        return mScaleLargestAtCenter;
-    }
-
-    protected void setScaleLargestAtCenter(boolean scaleLargestAtCenter) {
-        mScaleLargestAtCenter = scaleLargestAtCenter;
     }
 
     private static boolean isNonZero(float f) {
@@ -148,13 +63,11 @@ public abstract class ParameterizableViewTransformer implements CarouselView.Vie
     @Override
     public void transform(View view, float position) {
         int width = view.getMeasuredWidth(), height = view.getMeasuredHeight();
-//			int width = view.getWidth(), height = view.getHeight();
 
+        boolean mScaleLargestAtCenter = false;
+        float mScaleXFactor = Float.NaN;
         if (!Float.isNaN(mScaleXFactor)) {
             float scale = (mScaleLargestAtCenter ? 1 - Math.abs(position) : position) * mScaleXFactor;
-            if (!Float.isNaN(mScaleXOffset)) scale += mScaleXOffset;
-            if (!Float.isNaN(mMinScaleX)) scale = Math.max(mMinScaleX, scale);
-            if (!Float.isNaN(mMaxScaleX)) scale = Math.min(mMaxScaleX, scale);
             view.setPivotX(width / 2.0f);
             view.setPivotY(height / 2.0f);
             view.setScaleX(scale);
@@ -162,9 +75,6 @@ public abstract class ParameterizableViewTransformer implements CarouselView.Vie
 
         if (!Float.isNaN(mScaleYFactor)) {
             float scale = (mScaleLargestAtCenter ? 1 - Math.abs(position) : position) * mScaleYFactor;
-            if (!Float.isNaN(mScaleYOffset)) scale += mScaleYOffset;
-            if (!Float.isNaN(mMinScaleY)) scale = Math.max(mMinScaleY, scale);
-            if (!Float.isNaN(mMaxScaleY)) scale = Math.min(mMaxScaleY, scale);
             view.setPivotX(width / 2.0f);
             view.setPivotY(height / 2.0f);
             view.setScaleY(scale);

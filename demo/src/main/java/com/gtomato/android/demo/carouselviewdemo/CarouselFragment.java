@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +21,13 @@ import butterknife.InjectView;
  * @author  sunny-chung
  */
 public class CarouselFragment extends Fragment {
-	CarouselView carousel;
-	TextView lblSelectedIndex;
+	private CarouselView carousel;
+	private TextView lblSelectedIndex;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-		return rootView;
+		return inflater.inflate(R.layout.fragment_main, container, false);
 	}
 
 	@Override
@@ -38,8 +36,8 @@ public class CarouselFragment extends Fragment {
 
 		final Bundle args = getArguments();
 
-		carousel = (CarouselView) getView().findViewById(R.id.carousel);
-		lblSelectedIndex = (TextView) getView().findViewById(R.id.lblSelectedIndex);
+		carousel = getView().findViewById(R.id.carousel);
+		lblSelectedIndex = getView().findViewById(R.id.lblSelectedIndex);
 
 		ViewGroup.LayoutParams lp = carousel.getLayoutParams();
 		lp.width = args.getInt("layoutWidth");
@@ -64,13 +62,8 @@ public class CarouselFragment extends Fragment {
 
 		carousel.setOnItemSelectedListener(new CarouselView.OnItemSelectedListener() {
 			@Override
-			public void onItemSelected(CarouselView carouselView, int position, int adapterPosition, RecyclerView.Adapter adapter) {
+			public void onItemSelected(int position) {
 				lblSelectedIndex.setText("Selected Position " + position);
-			}
-
-			@Override
-			public void onItemDeselected(CarouselView carouselView, int position, int adapterPosition, RecyclerView.Adapter adapter) {
-
 			}
 		});
 
@@ -137,19 +130,21 @@ public class CarouselFragment extends Fragment {
 		});
 	}
 
-	public static class ViewHolder extends CarouselView.ViewHolder {
+	static class ViewHolder extends CarouselView.ViewHolder {
 		@InjectView(R.id.carousel_child_container) TextView textView;
 
-		public ViewHolder(View itemView) {
+		ViewHolder(View itemView) {
 			super(itemView);
 			ButterKnife.inject(this, itemView);
 		}
 	}
 
-	public static class RandomPageAdapter extends CarouselView.Adapter<ViewHolder> {
-		int size, width, height;
+	static class RandomPageAdapter extends CarouselView.Adapter<ViewHolder> {
+		final int size;
+		final int width;
+		final int height;
 
-		public RandomPageAdapter(int size, int width, int height) {
+		RandomPageAdapter(int size, int width, int height) {
 			super();
 			this.size = size;
 			this.width = width;
@@ -160,8 +155,7 @@ public class CarouselFragment extends Fragment {
 		public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 			Context context = parent.getContext();
 			View view = RandomPageFragment.createView(context, width, height, "0");
-			ViewHolder holder = new ViewHolder(view);
-			return holder;
+			return new ViewHolder(view);
 		}
 
 		@Override

@@ -1,9 +1,6 @@
 package com.gtomato.android.ui.manager;
 
-import android.graphics.PointF;
 import android.graphics.Rect;
-import android.os.Build;
-import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -32,21 +29,15 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 	private static final String TAG = CarouselLayoutManager.class.getSimpleName();
 
 	public final static ViewTransformer DEFAULT_TRANSFORMER = new ImmutableTransformer(new LinearViewTransformer());
-	public final static CarouselView.Scroller DEFAULT_SCROLLER = new NormalScroller();
+	private final static CarouselView.Scroller DEFAULT_SCROLLER = new NormalScroller();
 
-	//	private boolean mInverseScrollDirection = false;
 	private CarouselView.OnItemClickListener mOnItemClickListener = null;
 	private boolean mInfinite = true;
 	private CarouselView.DrawOrder mDrawOrder = CarouselView.DrawOrder.FirstBack;
 	private int mExtraVisibleChilds = 0;
 	private int mGravity = Gravity.CENTER_HORIZONTAL;
 
-//	private SparseArray<WeakReference<View>> mViewAtPosition = new SparseArray<>(1000);
-
-//	private PerformanceTimer mPerformanceTimer = new PerformanceTimer("CarouselLayoutManager");
 	private Queue<Runnable> mPendingTasks = new LinkedList<>();
-
-	private Handler mHandler = new Handler();
 
 	// temp cached values
 	@Nullable private RecyclerView mRecyclerView = null;
@@ -109,7 +100,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 	 * Note: Other options, e.g. extraVisibleChilds, that possibly set by
 	 * custom transformers may have to reset by developers manually.
 	 */
-	public void resetOptions() {
+	private void resetOptions() {
 		setScroller(null);
 		setDrawOrder(CarouselView.DrawOrder.FirstBack);
 	}
@@ -122,15 +113,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		return mTransformer;
 	}
 
-	/**
-	 * Returns the number of extra children per side to be preserved and managed by transformations.
-	 * @return
-	 */
-	public int getExtraVisibleChilds() {
-		return mExtraVisibleChilds;
-	}
-
-	/**
+    /**
 	 * Set the number of extra children per side to be preserved and managed by transformations.
 	 * <p />
 	 * Number of cached children views = (num + 2) * 2 + 1
@@ -149,7 +132,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 	 * Returns whether the items are recurring.
 	 * @return
 	 */
-	public boolean isInfinite() {
+	private boolean isInfinite() {
 		return mInfinite;
 	}
 
@@ -199,14 +182,6 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 	}
 
 	/**
-	 * Returns the drawing order of the centermost item.
-	 * @return
-	 */
-	public CarouselView.DrawOrder getDrawOrder() {
-		return mDrawOrder;
-	}
-
-	/**
 	 * Set the drawing order of the centermost item.
 	 * @param drawOrder
 	 * @return
@@ -249,15 +224,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		return false;
 	}
 
-	/**
-	 * Returns the current X-axis scrolling position in pixels.
-	 * @return
-	 */
-	public int getScrollX() {
-		return mScrollOffset;
-	}
-
-	private int getContentLeftX() {
+    private int getContentLeftX() {
 		return mScrollOffset - getContentWidth() / 2;
 	}
 
@@ -298,8 +265,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 	 */
 	public float getCurrentOffset() {
 		float totalOffset = pixelToPosition(mScrollOffset);
-		float offset = Math.abs(totalOffset - (float) Math.floor(totalOffset));
-		return offset;
+        return Math.abs(totalOffset - (float) Math.floor(totalOffset));
 	}
 
 	@Override
@@ -326,16 +292,12 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		return dx;
 	}
 
-	private int positionOfIndex(int childIndex) {
-		return childIndex;
-	}
-
-	/**
+    /**
 	 * Returns a position based on a given pixel.
 	 * @param pixel
 	 * @return
 	 */
-	protected float pixelToPosition(int pixel) {
+	private float pixelToPosition(int pixel) {
 		return mDecoratedChildWidth != 0 ? (float) pixel / mDecoratedChildWidth : 0;
 	}
 
@@ -348,7 +310,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		mDecoratedChildWidth = 0;
 		mDecoratedChildHeight = 0;
 		super.onMeasure(recycler, state, widthSpec, heightSpec);
-		adjustHostDimension(recycler, state, widthSpec, heightSpec);
+		adjustHostDimension(recycler, widthSpec, heightSpec);
 		log("carousel width = " + mMeasuredWidth + ", height = " + mMeasuredHeight);
 
 		if (CarouselView.isDebug()) {
@@ -360,7 +322,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		}
 	}
 
-	void adjustHostDimension(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+	private void adjustHostDimension(RecyclerView.Recycler recycler, int widthSpec, int heightSpec) {
 		final int widthMode = View.MeasureSpec.getMode(widthSpec);
 		final int heightMode = View.MeasureSpec.getMode(heightSpec);
 		final int widthSize = View.MeasureSpec.getSize(widthSpec);
@@ -451,21 +413,21 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		final int widthSpec = LayoutManager.getChildMeasureSpec(width,
 				getPaddingLeft() + getPaddingRight() +
 						lp.leftMargin + lp.rightMargin + widthUsed, lp.width,
-				false && canScrollHorizontally());
+				false);
 		final int heightSpec = LayoutManager.getChildMeasureSpec(height,
 				getPaddingTop() + getPaddingBottom() +
 						lp.topMargin + lp.bottomMargin + heightUsed, lp.height,
-				false && canScrollVertically());
+				false);
 		child.measure(widthSpec, heightSpec);
 	}
 
 	private void updateWindowVariables() {
 		switch (mGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-			case Gravity.LEFT: {
+			case Gravity.START: {
 				mLeftOffset = getPaddingLeft();
 			} break;
 
-			case Gravity.RIGHT: {
+			case Gravity.END: {
 				mLeftOffset = mMeasuredWidth - getPaddingRight() - mDecoratedChildWidth;
 			} break;
 
@@ -532,16 +494,12 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		logv("onLayoutChildren ============== end");
 	}
 
-	private int getVisibleChildCount() {
-		return getContentWidth() / mDecoratedChildWidth + 1;
-	}
-
-	/**
+    /**
 	 * Returns an adapter position based on a given absolute position.
 	 * @param position
 	 * @return
 	 */
-	public int translatePosition(int position) {
+	private int translatePosition(int position) {
 		if (!mInfinite) return position;
 		int itemCount = getItemCount();
 		position %= itemCount;
@@ -569,10 +527,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 	 */
 	private void fillChildrenView(RecyclerView.Recycler recycler, RecyclerView.State state) {
 		logv("fillChildrenView ==============");
-		// use MultiSparseArray instead of SparseArray because getPosition can be repeated, otherwise viewCache.put() would replace the views and cause memory leak
-		MultiSparseArray<View> viewCache = new MultiSparseArray<View>(getChildCount()); // at the end of iteration, all views in viewCache will be recycled
-
-//		mPerformanceTimer.time("fillChildrenView start");
+		MultiSparseArray<View> viewCache = new MultiSparseArray<>(getChildCount()); // at the end of iteration, all views in viewCache will be recycled
 
 		// Cache all views by their existing position and detach them
 		logv("getChildCount() = " + getChildCount());
@@ -584,13 +539,9 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 			detachView(child);
 		}
 
-//		mPerformanceTimer.time("fillChildrenView detachView");
-
 		int leftmostPosition = getLeftmostVisiblePosition();
 		int rightmostPosition = getRightmostVisiblePosition();
 		int currentPosition = getCurrentPosition();
-
-		// ASSERT if mInfinite, 0 <= leftmostPosition <= rightmostPosition < getItemCount()
 
 		if (leftmostPosition <= rightmostPosition) {
 			// draw all the children views that are in range of [leftmostPosition, rightmostPosition]
@@ -651,19 +602,14 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 
 		}
 
-//		mPerformanceTimer.time("fillChildrenView drawView");
 
 		// Recycle views that are not re-attached
 		for (int i = viewCache.size() - 1; i >= 0; --i) {
 			logv(String.format("recycleView (%d) %s", viewCache.keyAt(i), viewCache.valuesAt(i)));
-//			mViewAtPosition.remove(viewCache.keyAt(i));
-//			recycler.recycleView(viewCache.valueAt(i));
 			for (View v : viewCache.valuesAt(i)) {
 				recycler.recycleView(v);
 			}
 		}
-
-//		mPerformanceTimer.time("fillChildrenView recycleView");
 
 		logv("getChildCount() = " + getChildCount());
 
@@ -692,18 +638,16 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 				@Override
 				public void onClick(View v) {
 					if (mOnItemClickListener != null) {
-						mOnItemClickListener.onItemClick(null, v, position, translatePosition(position));
+						mOnItemClickListener.onItemClick(v, position, translatePosition(position));
 					}
 				}
 			});
 			addView(view);
-//			mViewAtPosition.put(position, new WeakReference<>(view));
 			logv(String.format("addView (%d [%d]) %s", position, translatedPosition, view));
 
 		} else {
 			// re-attach the cached view
 			attachView(view);
-//			viewCache.remove(translatedPosition);
 		}
 
 		measureChildWithMargins(view, 0, 0);
@@ -718,11 +662,6 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 
 		mTransformer.transform(view, -(pixelToPosition(mScrollOffset) - position));
 	}
-
-//	public View getViewAtPosition(int position) {
-//		WeakReference<View> viewRef = mViewAtPosition.get(position);
-//		return viewRef != null ? viewRef.get() : null;
-//	}
 
 	@Override
 	public void scrollToPosition(final int position) {
@@ -742,24 +681,13 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 			log("scrollToPosition " + position + "set mScrollPositionUpdated");
 		}
 		mScrollOffset = newOffset;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && mRecyclerView != null && !mRecyclerView.isInLayout()) {
+		if (mRecyclerView != null && !mRecyclerView.isInLayout()) {
 			requestLayout();
 		}
 	}
 
 	@Override
-	public void smoothScrollToPosition(final RecyclerView recyclerView, final RecyclerView.State state,
-	                                   int position) {
-//		LinearSmoothScroller linearSmoothScroller =
-//				new LinearSmoothScroller(recyclerView.getContext()) {
-//					@Override
-//					public PointF computeScrollVectorForPosition(int targetPosition) {
-//						return CarouselLayoutManager.this
-//								.computeScrollVectorForPosition(targetPosition);
-//					}
-//				};
-//		linearSmoothScroller.setTargetPosition(position);
-//		startSmoothScroll(linearSmoothScroller);
+	public void smoothScrollToPosition(final RecyclerView recyclerView, final RecyclerView.State state, int position) {
 		log("smoothScrollToPosition " + position + " " + recyclerView);
 		int minScrollOffset = Integer.MAX_VALUE;
 		final int nChilds = getItemCount();
@@ -792,25 +720,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		recyclerView.smoothScrollBy(minScrollOffset, 0);
 	}
 
-	/**
-	 * NOT USED.
-	 * @param targetPosition
-	 * @return
-	 */
-	private PointF computeScrollVectorForPosition(int targetPosition) {
-//		if (getChildCount() == 0) {
-//			return null;
-//		}
-		final int targetOffset = targetPosition * mDecoratedChildWidth;
-		final int direction = targetOffset < mScrollOffset ? -1 : 1;
-//		if (mOrientation == HORIZONTAL) {
-			return new PointF(direction /*targetOffset - mScrollOffset*/, 0);
-//		} else {
-//			return new PointF(0, direction);
-//		}
-	}
-
-	@Override
+    @Override
 	public void onAdapterChanged(RecyclerView.Adapter oldAdapter, RecyclerView.Adapter newAdapter) {
 		super.onAdapterChanged(oldAdapter, newAdapter);
 		removeAllViews();
@@ -829,7 +739,6 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		for (int i = 0; i < itemCount; ++i) {
 			View view = findViewByPosition(positionStart + i);
 			if (view != null) view.forceLayout();
-//			removeAndRecycleView(view, recyclerView.recyc);
 		}
 	}
 
@@ -883,22 +792,13 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 		}
 	}
 
-	/**
-	 * Retrieve the underlying CarouselView.
-	 * @return
-	 */
-	@Nullable
-	protected CarouselView getCarouselView() {
-		return (CarouselView) mRecyclerView;
-	}
-
-	/**
+    /**
 	 * Add a given runnable action to the underlying CarouselView.
 	 * @param action
 	 * @return whether the given action is successfully queued
 	 * @see CarouselView#post(Runnable)
 	 */
-	protected boolean post(Runnable action) {
+	private boolean post(Runnable action) {
 		if (mRecyclerView == null) return false;
 
 		mRecyclerView.post(action);
@@ -921,9 +821,7 @@ public class CarouselLayoutManager extends RecyclerView.LayoutManager {
 
 		int scrollOffset;
 
-		SavedState() {
-
-		}
+		SavedState() {}
 
 		private SavedState(Parcel in) {
 			scrollOffset = in.readInt();

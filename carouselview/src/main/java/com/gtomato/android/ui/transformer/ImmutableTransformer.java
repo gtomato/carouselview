@@ -12,7 +12,7 @@ import com.gtomato.android.ui.widget.CarouselView;
  */
 
 public final class ImmutableTransformer implements CarouselView.ViewTransformer {
-    private CarouselView.ViewTransformer mTransformer;
+    private final CarouselView.ViewTransformer mTransformer;
 
     public ImmutableTransformer(CarouselView.ViewTransformer transformer) {
         mTransformer = transformer;
