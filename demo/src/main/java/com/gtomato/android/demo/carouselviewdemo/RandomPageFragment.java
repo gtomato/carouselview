@@ -22,7 +22,7 @@ import java.util.Random;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class RandomPageFragment extends Fragment {
-	public final static String TEXT = "TEXT";
+	private final static String TEXT = "TEXT";
 
 	private String text;
 

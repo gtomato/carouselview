@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/GT_CarouselView_Android_Demo.iml" filepath="$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/GT_CarouselView_Android_Demo.iml" />
-      <module fileurl="file://$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/carouselview/carouselview.iml" filepath="$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/carouselview/carouselview.iml" />
-      <module fileurl="file://$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/demo/demo.iml" filepath="$USER_HOME$/Dropbox/Codes/mobile/gitapp/GT_CarouselView_Android_Demo/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/carouselview/carouselview-carouselview.iml" filepath="$PROJECT_DIR$/carouselview/carouselview-carouselview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace-carouselview.iml" filepath="$PROJECT_DIR$/workspace-carouselview.iml" />
     </modules>
   </component>
 </project>

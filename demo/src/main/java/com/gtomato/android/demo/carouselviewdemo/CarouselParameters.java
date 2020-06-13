@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
  * @author  sunny-chung
  */
 
-public class CarouselParameters {
-    public static final List<Class<? extends CarouselView.ViewTransformer>> TRANSFORMER_CLASSES = Arrays.asList(
+class CarouselParameters {
+    static final List<Class<? extends CarouselView.ViewTransformer>> TRANSFORMER_CLASSES = Arrays.asList(
             LinearViewTransformer.class,
             WheelViewTransformer.class,
             CoverFlowViewTransformer.class,
@@ -50,24 +50,24 @@ public class CarouselParameters {
 
     private static final Map<String, RangeInfo> PARAMETER_RANGES = new HashMap<String, RangeInfo>() {{
         // only "from" and "to" fields of RangeInfo are used
-        put("yProjection", new RangeInfo<>(0.0, 90.0, 0, 0));
-        put("numPies", new RangeInfo<>(1, Integer.MAX_VALUE, 0, 0));
-        put("horizontalViewPort", new RangeInfo<>(0.0, 1.0, 0, 0));
-        put("farAlpha", new RangeInfo<>(-1.0, 1.0, 0, 0));
+        put("yProjection", new RangeInfo<>(0.0, 90.0, 0.0, 0));
+        put("numPies", new RangeInfo<>(1.0, Double.MAX_VALUE, 0.0, 0));
+        put("horizontalViewPort", new RangeInfo<>(0.0, 1.0, 0.0, 0));
+        put("farAlpha", new RangeInfo<>(-1.0, 1.0, 0.0, 0));
     }};
 
-    public static final Map<String, Integer> GRAVITY = Collections.unmodifiableMap(new LinkedHashMap<String, Integer>() {{
-        put("LEFT", Gravity.LEFT);
-        put("RIGHT", Gravity.RIGHT);
+    static final Map<String, Integer> GRAVITY = Collections.unmodifiableMap(new LinkedHashMap<String, Integer>() {{
+        put("LEFT", Gravity.START);
+        put("RIGHT", Gravity.END);
         put("TOP", Gravity.TOP);
         put("BOTTOM", Gravity.BOTTOM);
         put("CENTER", Gravity.CENTER);
         put("CENTER_HORIZONTAL", Gravity.CENTER_HORIZONTAL);
         put("CENTER_VERTICAL", Gravity.CENTER_VERTICAL);
-        put("LEFT|BOTTOM", Gravity.LEFT | Gravity.BOTTOM);
-        put("LEFT|CENTER_VERTICAL", Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        put("RIGHT|BOTTOM", Gravity.RIGHT | Gravity.BOTTOM);
-        put("RIGHT|CENTER_VERTICAL", Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        put("LEFT|BOTTOM", Gravity.START | Gravity.BOTTOM);
+        put("LEFT|CENTER_VERTICAL", Gravity.START | Gravity.CENTER_VERTICAL);
+        put("RIGHT|BOTTOM", Gravity.END | Gravity.BOTTOM);
+        put("RIGHT|CENTER_VERTICAL", Gravity.END | Gravity.CENTER_VERTICAL);
     }});
 
     private static final double FLOAT_PARAMETER_DEFAULT_MAX_VALUE = 1.5f;
@@ -76,7 +76,7 @@ public class CarouselParameters {
     private static final int INT_PARAMETER_DEFAULT_MAX_VALUE = 10;
     private static final int INT_PARAMETER_DEFAULT_MIN_VALUE = -10;
 
-    public static List<String> getTransformerNames() {
+    static List<String> getTransformerNames() {
         List<String> names = new ArrayList<>();
         for (Class clazz : TRANSFORMER_CLASSES) {
             names.add(clazz.getSimpleName());
@@ -84,7 +84,7 @@ public class CarouselParameters {
         return names;
     }
 
-    public static String getParameterName(String setterMethodName) {
+    static String getParameterName(String setterMethodName) {
         if (!setterMethodName.matches("set[A-Z].*")) {
             throw new IllegalArgumentException("not setter method");
         }
@@ -111,7 +111,7 @@ public class CarouselParameters {
         return parameterName;
     }
 
-    public static RangeInfo<Double> getParameterRangeInfoDouble(Method setterMethod) {
+    static RangeInfo<Double> getParameterRangeInfoDouble(Method setterMethod) {
 
         double upper = FLOAT_PARAMETER_DEFAULT_MAX_VALUE, lower = FLOAT_PARAMETER_DEFAULT_MIN_VALUE;
 
@@ -161,7 +161,7 @@ public class CarouselParameters {
         return new RangeInfo<>(lower, upper, interval, numIntervals);
     }
 
-    public static RangeInfo<Integer> getParameterRangeInfoInt(Method setterMethod) {
+    static RangeInfo<Integer> getParameterRangeInfoInt(Method setterMethod) {
 
         int upper = INT_PARAMETER_DEFAULT_MAX_VALUE, lower = INT_PARAMETER_DEFAULT_MIN_VALUE;
 
@@ -199,7 +199,7 @@ public class CarouselParameters {
         return new RangeInfo<>(lower, upper, interval, numIntervals);
     }
 
-    public static List<Method> getSetterMethods(Class<? extends CarouselView.ViewTransformer> clazz) {
+    static List<Method> getSetterMethods(Class<? extends CarouselView.ViewTransformer> clazz) {
         List<Method> result = new ArrayList<>();
         Pattern setterMethodPattern = Pattern.compile("set[A-Z].*");
         for (Method method : clazz.getMethods()) {
@@ -210,7 +210,7 @@ public class CarouselParameters {
         return result;
     }
 
-    public static Map<String, Method> getSetterMethodMap(Class<? extends CarouselView.ViewTransformer> clazz) {
+    private static Map<String, Method> getSetterMethodMap(Class<? extends CarouselView.ViewTransformer> clazz) {
         Map<String, Method> result = new HashMap<>();
         Pattern setterMethodPattern = Pattern.compile("set[A-Z].*");
         for (Method method : clazz.getMethods()) {
@@ -221,7 +221,7 @@ public class CarouselParameters {
         return result;
     }
 
-    public static <T extends CarouselView.ViewTransformer> Map<String, Number> getDefaultTransformerParameters(Class<T> clazz, List<Method> setterMethods) {
+    static <T extends CarouselView.ViewTransformer> Map<String, Number> getDefaultTransformerParameters(Class<T> clazz, List<Method> setterMethods) {
         Map<String, Number> results = new HashMap<>();
         T transformer;
         try {
@@ -289,15 +289,13 @@ public class CarouselParameters {
                 throw new RuntimeException(e);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
-            } catch (ClassCastException e) {
-                throw e;
             }
         }
 
         return results;
     }
 
-    public static <T extends CarouselView.ViewTransformer> T createTransformer(Class<T> clazz, Map<String, Number> parameters) {
+    static <T extends CarouselView.ViewTransformer> T createTransformer(Class<T> clazz, Map<String, Number> parameters) {
         T transformer;
         try {
             transformer = clazz.getDeclaredConstructor().newInstance();
@@ -343,7 +341,7 @@ public class CarouselParameters {
         return transformer;
     }
 
-    public static String getBeanName(String setterMethodName) {
+    static String getBeanName(String setterMethodName) {
         return setterMethodName.substring(3, 4).toLowerCase() + setterMethodName.substring(4);
     }
 
@@ -362,10 +360,12 @@ public class CarouselParameters {
     }
 
     static class RangeInfo<T> {
-        public T from, to, interval;
-        public int numIntervals;
+        final T from;
+        final T to;
+        final T interval;
+        final int numIntervals;
 
-        public RangeInfo(T from, T to, T interval, int numIntervals) {
+        RangeInfo(T from, T to, T interval, int numIntervals) {
             this.from = from;
             this.to = to;
             this.interval = interval;

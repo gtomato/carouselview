@@ -13,8 +13,7 @@ import java.util.ArrayList;
  */
 public class MultiSparseArray<E> {
 
-    SparseArray<ArrayList<E>> mArray;
-    int mSize = 0;
+    private final SparseArray<ArrayList<E>> mArray;
 
     public MultiSparseArray() {
         mArray = new SparseArray<>();
@@ -28,14 +27,7 @@ public class MultiSparseArray<E> {
         ArrayList<E> values = mArray.get(key);
         if (values == null) values = new ArrayList<>();
         values.add(value);
-        ++mSize;
         mArray.put(key, values);
-    }
-
-    public E get(int key) {
-        ArrayList<E> values = mArray.get(key);
-        if (values != null && values.size() > 0) return values.get(0);
-        return null;
     }
 
     public E pop(int key) {
@@ -43,23 +35,12 @@ public class MultiSparseArray<E> {
         if (values != null && values.size() > 0) {
             E value = values.get(0);
             values.remove(0);
-            --mSize;
             return value;
         }
         return null;
     }
 
-    public void remove(int key) {
-        ArrayList<E> values = mArray.get(key);
-        if (values != null && values.size() > 0) {
-            values.remove(0);
-            --mSize;
-            // let the empty array to stay in memory
-        }
-    }
-
     public int size() {
-//        return mSize;
         return mArray.size();
     }
 

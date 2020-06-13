@@ -14,19 +14,7 @@ public class Metrics {
 	 * @return pixel
 	 */
 	public static float convertDpToPixel(float dp, Context context){
-		float px = dp * getDensity(context);
-		return px;
-	}
-
-	/**
-	 * Covert px to dp
-	 * @param px
-	 * @param context
-	 * @return dp
-	 */
-	public static float convertPixelToDp(float px, Context context){
-		float dp = px / getDensity(context);
-		return dp;
+		return dp * getDensity(context);
 	}
 
 	/**
@@ -37,7 +25,7 @@ public class Metrics {
 	 * @param context
 	 * @return
 	 */
-	public static float getDensity(Context context){
+	private static float getDensity(Context context){
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		return metrics.density;
 	}

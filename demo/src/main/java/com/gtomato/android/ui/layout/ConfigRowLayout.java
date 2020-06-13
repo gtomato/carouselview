@@ -1,8 +1,6 @@
 package com.gtomato.android.ui.layout;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -34,23 +32,8 @@ public class ConfigRowLayout extends ViewGroup {
 		super(context, attrs, defStyleAttr);
 	}
 
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	public ConfigRowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-		super(context, attrs, defStyleAttr, defStyleRes);
-	}
-
-	public TextView getTextView() {
-		return mTextView;
-	}
-
-	public View getContentView() {
-		return mContentView;
-	}
-
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//		super.measure(widthMeasureSpec, heightMeasureSpec);
-
 		final int childCount = getChildCount();
 
 		if (childCount > 2) {
@@ -63,13 +46,10 @@ public class ConfigRowLayout extends ViewGroup {
 		int bottomOffset = getPaddingBottom();
 
 		int contentWidth = getMeasuredWidth() - leftOffset - rightOffset;
-		int contentHeight = getMeasuredHeight() - topOffset - bottomOffset;
 
 		mMaxHeight = 0;
 		for (int i = childCount - 1; i >= 0; --i) {
 			View child = getChildAt(i);
-//			Size childSize = measureChildSize(child, contentWidth, MeasureSpec.UNSPECIFIED);
-//			mMaxHeight = Math.max(mMaxHeight, childSize.height);
 
 			if (child.getVisibility() != View.GONE) {
 				if (child.getClass().equals(TextView.class)) {
@@ -80,8 +60,6 @@ public class ConfigRowLayout extends ViewGroup {
 			}
 		}
 
-		//==
-
 		if (mContentView == null) {
 			mContentView = mTextView;
 			mTextView = null;
@@ -90,17 +68,17 @@ public class ConfigRowLayout extends ViewGroup {
 		updatePendingText();
 
 		if (mTextView != null) {
-			if (mTextView.getGravity() != Gravity.RIGHT) {
-				mTextView.setGravity(Gravity.RIGHT);
+			if (mTextView.getGravity() != Gravity.END) {
+				mTextView.setGravity(Gravity.END);
 			}
-			mTextViewSize = measureChildSize(mTextView, contentWidth, MeasureSpec.UNSPECIFIED);
+			mTextViewSize = measureChildSize(mTextView, contentWidth);
 			mMaxHeight = Math.max(mMaxHeight, mTextViewSize.height);
 		}
 
 		mContentViewAvailableWidth = contentWidth - (mTextViewSize != null ? mTextViewSize.width /*+ (int) Metrics.convertDpToPixel(8, getContext())*/ : 0);
 
 		if (mContentView != null) {
-			mContentViewSize = measureChildSize(mContentView, mContentViewAvailableWidth, MeasureSpec.UNSPECIFIED);
+			mContentViewSize = measureChildSize(mContentView, mContentViewAvailableWidth);
 			mMaxHeight = Math.max(mMaxHeight, mContentViewSize.height);
 		}
 
@@ -109,13 +87,10 @@ public class ConfigRowLayout extends ViewGroup {
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		int topOffset = getPaddingTop();
 		int leftOffset = getPaddingLeft();
 		int rightOffset = getPaddingRight();
-		int bottomOffset = getPaddingBottom();
 
 		int contentWidth = getMeasuredWidth() - leftOffset - rightOffset;
-		int contentHeight = getMeasuredHeight() - topOffset - bottomOffset;
 
 		if (mTextView != null) {
 			mTextView.layout(leftOffset, (mMaxHeight - mTextViewSize.height) / 2, leftOffset + contentWidth, (mMaxHeight + mTextViewSize.height) / 2);
@@ -140,23 +115,30 @@ public class ConfigRowLayout extends ViewGroup {
 		return mTextView.getText();
 	}
 
-	protected void updatePendingText() {
+	private void updatePendingText() {
 		if (mTextView != null && mText != null) {
 			mTextView.setText(mText);
 			mText = null;
 		}
 	}
 
-	private Size measureChildSize(View child, int parentWidth, int parentHeight) {
-		child.measure(parentHeight == MeasureSpec.UNSPECIFIED ? MeasureSpec.UNSPECIFIED : MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST),
-				parentHeight == MeasureSpec.UNSPECIFIED ? MeasureSpec.UNSPECIFIED : MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST));
+	private Size measureChildSize(View child, int parentWidth) {
+		child.measure(
+				MeasureSpec.UNSPECIFIED == MeasureSpec.UNSPECIFIED
+						? MeasureSpec.UNSPECIFIED
+						: MeasureSpec.makeMeasureSpec(parentWidth, MeasureSpec.AT_MOST),
+				MeasureSpec.UNSPECIFIED == MeasureSpec.UNSPECIFIED
+						? MeasureSpec.UNSPECIFIED
+						: MeasureSpec.makeMeasureSpec(MeasureSpec.UNSPECIFIED, MeasureSpec.AT_MOST)
+		);
 		return new Size(child.getMeasuredWidth(), child.getMeasuredHeight());
 	}
 
 	private static class Size {
-		int width, height;
+		final int width;
+		final int height;
 
-		public Size(int width, int height) {
+		Size(int width, int height) {
 			this.width = width;
 			this.height = height;
 		}

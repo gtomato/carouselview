@@ -51,14 +51,14 @@ public class ConfigFragment extends Fragment {
 	@InjectView(R.id.spnLayoutHeight) Spinner spnLayoutHeight;
 	@InjectView(R.id.rcvTransformerParameters) RecyclerView rcvTransformerParameters;
 	@InjectView(R.id.tabPanel) TabLayout tabPanel;
-	ConfigRecyclerAdapter mConfigRecyclerAdapter;
+	private ConfigRecyclerAdapter mConfigRecyclerAdapter;
 	@InjectViews({R.id.sekItems, R.id.sekExtraChilds, R.id.sekItemWidth, R.id.sekItemHeight}) List<SeekBar> seekBars;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.option, container, false);
 		ButterKnife.inject(this, rootView);
-		setupView(rootView);
+		setupView();
 		return rootView;
 	}
 
@@ -68,7 +68,7 @@ public class ConfigFragment extends Fragment {
 		return adapter;
 	}
 
-	protected void setupView(View view) {
+	private void setupView() {
 		List<String> transformerNames = new ArrayList<>(CarouselParameters.getTransformerNames());
 		transformerNames.add("Custom");
 		spnTransformer.setAdapter(spinnerAdapterFromList(transformerNames));
@@ -125,12 +125,6 @@ public class ConfigFragment extends Fragment {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-//		updateDisplay();
-	}
-
-	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt("tabPos", tabPanel.getSelectedTabPosition());
@@ -162,7 +156,7 @@ public class ConfigFragment extends Fragment {
 		mConfigRecyclerAdapter.notifyDataSetChanged();
 	}
 
-	public void updateDisplay() {
+	private void updateDisplay() {
 		// update data
 		((ConfigRowLayout) spnTransformer.getParent()).setText(spnTransformer.getSelectedItem().toString());
 		((ConfigRowLayout) spnDrawOrder.getParent()).setText(spnDrawOrder.getSelectedItem().toString());
@@ -173,14 +167,9 @@ public class ConfigFragment extends Fragment {
 		((ConfigRowLayout) swhIsScrollingAlignToViews.getParent()).setText(swhIsScrollingAlignToViews.isChecked() ? "Yes" : "No");
 		((ConfigRowLayout) swhIsClipChildren.getParent()).setText(swhIsClipChildren.isChecked() ? "Yes" : "No");
 		((ConfigRowLayout) sekItems.getParent()).setText("" + (sekItems.getProgress() + 1));
-//		((ConfigRowLayout) sekAngle.getParent()).setText(sekAngle.getProgress() == 0 ? "OFF" : "" + sekAngle.getProgress());
-//		((ConfigRowLayout) sekOffsetX.getParent()).setText(sekOffsetX.getProgress() == 0 ? "OFF" : "" + (sekOffsetX.getProgress() - 11) / 10f);
-//		((ConfigRowLayout) sekOffsetY.getParent()).setText(sekOffsetY.getProgress() == 0 ? "OFF" : "" + (sekOffsetY.getProgress() - 11) / 10f);
 		((ConfigRowLayout) sekExtraChilds.getParent()).setText("" + sekExtraChilds.getProgress());
 		((ConfigRowLayout) sekItemWidth.getParent()).setText(sekItemWidth.getProgress() == sekItemWidth.getMax() ? "Fill Parent" : "" + (sekItemWidth.getProgress() * 10 + 40));
 		((ConfigRowLayout) sekItemHeight.getParent()).setText(sekItemHeight.getProgress() == sekItemHeight.getMax() ? "Fill Parent" : "" + (sekItemHeight.getProgress() * 10 + 40));
-
-//		mConfigRecyclerAdapter.notifyDataSetChanged();
 
 		// update "tab"
 		int nChilds = tabContentFrame.getChildCount();
@@ -202,7 +191,7 @@ public class ConfigFragment extends Fragment {
 		args.putBoolean("isAlign", swhIsScrollingAlignToViews.isChecked());
 		args.putInt("drawOrder", spnDrawOrder.getSelectedItemPosition());
 		args.putInt("extraChilds", Integer.parseInt(((ConfigRowLayout) sekExtraChilds.getParent()).getText().toString()));
-		args.putInt("gravity", CarouselParameters.GRAVITY.get((String) spnGravity.getSelectedItem()));
+		args.putInt("gravity", CarouselParameters.GRAVITY.get(spnGravity.getSelectedItem()));
 		args.putBoolean("isClipChildren", swhIsClipChildren.isChecked());
 
 		int layoutWidth;

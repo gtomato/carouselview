@@ -26,21 +26,19 @@ import butterknife.InjectView;
 
 public class ConfigRecyclerAdapter extends RecyclerView.Adapter<ConfigRecyclerAdapter.ViewHolder> {
 
-    Class mClass;
-    List<Method> mSetterMethods = new ArrayList<>();
-    final Object mLock = new Object();
+    private List<Method> mSetterMethods = new ArrayList<>();
+    private final Object mLock = new Object();
 
-    Map<String, Number> mValues = new HashMap<>(); // key = beanName; value = actual value (boolean stores as Byte 1/0)
+    private Map<String, Number> mValues = new HashMap<>(); // key = beanName; value = actual value (boolean stores as Byte 1/0)
 
-    public ConfigRecyclerAdapter(Class<? extends CarouselView.ViewTransformer> aClass) {
+    ConfigRecyclerAdapter(Class<? extends CarouselView.ViewTransformer> aClass) {
         setClass(aClass);
     }
 
     public void setClass(Class<? extends CarouselView.ViewTransformer> aClass) {
-        mClass = aClass;
 
         synchronized (mLock) {
-            if (mClass != null) {
+            if (aClass != null) {
                 mSetterMethods = CarouselParameters.getSetterMethods(aClass);
                 mValues = CarouselParameters.getDefaultTransformerParameters(aClass, mSetterMethods);
             } else {
@@ -50,7 +48,7 @@ public class ConfigRecyclerAdapter extends RecyclerView.Adapter<ConfigRecyclerAd
         }
     }
 
-    public Map<String, Number> getSelectedValues() {
+    Map<String, Number> getSelectedValues() {
         return mValues;
     }
 
@@ -68,9 +66,9 @@ public class ConfigRecyclerAdapter extends RecyclerView.Adapter<ConfigRecyclerAd
 
         final String beanName = CarouselParameters.getBeanName(method.getName());
 
-        /**
-         * if cell changed, reconfigure the whole cell;
-         * otherwise, just update the result display text
+        /*
+          if cell changed, reconfigure the whole cell;
+          otherwise, just update the result display text
          */
         boolean isCellChanged = vh.getOldPosition() != vh.getPosition();
 
@@ -224,13 +222,13 @@ public class ConfigRecyclerAdapter extends RecyclerView.Adapter<ConfigRecyclerAd
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @InjectView(R.id.lblTitle) TextView lblTitle;
         @InjectView(R.id.sekParameter) SeekBar sekParameter;
         @InjectView(R.id.swhParameter) Switch swhParameter;
         @InjectView(R.id.lblResult) TextView lblResult;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
         }

@@ -30,7 +30,6 @@
 		tools:text="Selected Index"
 		android:layout_alignParentStart="true"
 		android:layout_alignParentBottom="true"
-		android:layout_alignParentLeft="true"
 		android:textColor="@android:color/white"/>
 
 </RelativeLayout>
